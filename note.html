@@ -42,7 +42,7 @@
 </head>
 <body>
     <div class="main" x-data="{ open: false }">
-        <div class="login" x-data="{ password: '8afddc34e606a271f502219bd7d3132d', userInput: '' }" x-show="!open">
+        <div class="login" x-data="{ password: '81dc9bdb52d04dc20036dbd8313ed055', userInput: '' }" x-show="!open">
             <form @submit.prevent>
                 <input x-model="userInput" placeholder="Enter password" type="password">
                 <button @click="if (userInput.length > 0) { if (CryptoJS.MD5(userInput) == password) { open = true; } } userInput=''">Submit</button>
