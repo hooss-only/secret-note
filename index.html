@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+    <script defer src="https://unpkg.com/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <title>Document</title>
+    <style>
+        .delete:hover {
+            cursor: pointer;
+        }
+
+        .main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login {
+            margin: auto;
+        }
+
+        .note {
+            margin: auto;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="main" x-data="{ open: false }">
+        <div class="login" x-data="{ password: '8afddc34e606a271f502219bd7d3132d', userInput: '' }" x-show="!open">
+            <form @submit.prevent>
+                <input x-model="userInput" placeholder="Enter password" type="password">
+                <button @click="if (userInput.length > 0) { if (CryptoJS.MD5(userInput) == password) { open = true; } } userInput=''">Submit</button>
+            </form>
+        </div>
+        <div class="note" x-data="{ note: $persist([]), userInput: '' }" x-show="open">
+            <form @submit.prevent>
+                <input x-model="userInput" placeholder="Enter memo" type="text">
+                <button @click="if (userInput.length > 0) {note.push(userInput);} userInput=''">Add</button>
+            </form>
+            <template x-for="memo in note">
+                <div>
+                    <span x-text="memo"></span>
+                    <button @click="note = note.filter((currMemo) => currMemo != memo)" class="delete">x</button>
+                </div>
+            </template>
+            <button @click="note = []" x-show="note.length > 0">Clear All</button>
+        </div>
+    </div>
+</body>
+</html>
